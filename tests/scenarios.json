@@ -50,18 +50,18 @@
    "lead_id": "L003",
    "spend_hint": "petrol and groceries",
    "offer_card_name": "HDFC Bank MoneyBack Plus Credit Card",
-   "offer_hook": "You've been shortlisted for a low-fee card that gives ten times points on groceries and Amazon.",
+   "offer_hook": "You'd filled the card enquiry form at the Hazratganj branch, and you've been shortlisted for a low-fee card that gives ten times points on groceries and Amazon.",
    "relationship": "new to the bank, on a pre-qualified list",
-   "value_line": "",
-   "personal_context": "nothing beyond the fields above",
-   "fee_outlook": "",
+   "value_line": "On the grocery and fuel spends you'd mentioned, that's roughly five thousand rupees back a year on a five hundred rupee card.",
+   "personal_context": "lead source: you'd filled the card enquiry form at the Hazratganj branch; they declared their petrol and groceries spend at the source; you have no bank data on them",
+   "fee_outlook": "It's a paid card, five hundred rupees a year, I won't dress that up. The waiver kicks in at fifty thousand of spend in the year; going by your grocery and fuel spends you'd mentioned you'd likely cross it, and if you don't, you pay it.",
    "offer_validity": "",
    "limit_line": "",
    "intro_line": "",
-   "opener_style": "benefit_first",
-   "opener_turn1": "",
-   "opener_turn2": "",
-   "opener_benefit": ""
+   "opener_style": "reason_first",
+   "opener_turn1": "Hi Amit. You'd filled the card enquiry form at the Hazratganj branch, so I'm following up on that, nothing to sign today. Got thirty seconds to see if it's worth your time?",
+   "opener_turn2": "Quick one: does more of your month go on groceries and fuel, or on online shopping?",
+   "opener_benefit": "Then this fits: the MoneyBack Plus gives ten times points on groceries, BigBasket and Amazon, on a five hundred rupee card."
   },
   "sneha": {
    "agent_name": "Aanya",
@@ -772,6 +772,27 @@
    "forbidden_tools": [
     "add_to_dnc",
     "send_summary",
+    "send_application_link"
+   ]
+  },
+  {
+   "id": "35_hindi_busy_then_no_polite",
+   "lead": "amit",
+   "persona": "आप अमित हैं, 41, लखनऊ, हिंदी में बात करते हैं। कॉलर की बात पूरी होने दें। तीस सेकंड के सवाल पर कहें 'नहीं, मेरे पास अभी time नहीं है।' अगर कॉलर विनम्रता से अनुमति माँगते हुए दो विकल्प दे (अभी बात या WhatsApp समरी और बाद में कॉल), तो कहें 'नहीं, मेरे को card नहीं चाहिए।' अगर कॉलर एक छोटी बात बताकर अनुमति माँगे, तो कहें 'नहीं, रहने दीजिए।' अगर कॉलर इसे मार्क करके विदा ले, तो कहें 'ठीक है, नमस्ते।' अगर कॉलर आदेश की तरह बोले (कर लीजिए, बताइए) या तीसरी बार पिच करे, तो कहें 'आप लोग सुनते नहीं हैं' और फ़ोन काट दें।",
+   "must_pass": [
+    "hindi_politeness",
+    "language_matched",
+    "stop_respected",
+    "no_exit_offered",
+    "dnc_only_on_explicit_request",
+    "graceful_end",
+    "identity_once"
+   ],
+   "must_call": [
+    "mark_declined"
+   ],
+   "forbidden_tools": [
+    "add_to_dnc",
     "send_application_link"
    ]
   }

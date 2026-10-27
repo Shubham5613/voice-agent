@@ -5,27 +5,21 @@ Persona: You are Amit, 42, from Lucknow, speak ONLY in Hindi (Devanagari or roma
 ## Transcript
 - **agent**: Hello, Aanya here from HDFC Bank. Am I speaking with Amit?
 - **user**: Haan, main Amit bol raha hoon.  Haan haan bataiye.
-- **agent**:   `tools: ['log_event']`
 - **agent**: Hi Amit.  You've been shortlisted for a low-fee card that gives ten times points on groceries and Amazon. Got thirty seconds to see if it's actually useful for you?
-- **user**: Haan haan, bataiye.
-- **agent**: Great.  Since you spend a lot
-- **agent**: on groceries and Amazon, this card could get you a five hundred rupee gift voucher every quarter.  Want to know about the fee and how it works?
-- **user**: Haan, bataiye.
-- **agent**: The HDFC Bank MoneyBack Plus Credit Card has a joining fee of five hundred rupees and an annual fee of five hundred rupees. The annual fee is waived if you spend fifty thousand rupees in the previous year. Does that sound good to you?
-- **user**: Haan, theek hai.
-- **agent**: Great.  Two quick things so I send the right one: your age, and roughly your monthly income, salaried or self-employed?
-- **user**: Main 42 saal ka hoon, salaried hoon,  aur 35000 kamata hoon.
+- **user**: Haan, haan, bilkul.  Bataiye.
+- **agent**: Great.  The HDFC Bank MoneyBack Plus Credit Card gives ten times CashPoints on Amazon, Flipkart, BigBasket, Reliance Smart, and Swiggy.  It's a paid card with an annual fee of five hundred rupees, which is waived if you spend fifty thousand rupees in the year. Does that sound interesting for your spending?
+- **user**: Haan, yeh toh achha lag raha hai.
 - **agent**:   `tools: ['check_eligibility']`
-- **agent**: Good news, you qualify to apply.  Quick formality before I send it: the annual fee is five hundred rupees, waived if you spend fifty thousand rupees, and approval is subject to the bank's eligibility check.  Entirely your call: shall I go ahead
-- **user**: Haan, bhej dijiye.
+- **agent**: Great to hear!  You qualify to apply for this card.  Quick formality before I send the link: the annual fee is five hundred rupees, waived if you spend fifty thousand rupees,  and approval is subject to the bank's eligibility check. Entirely your call: shall I go ahead?
+- **user**: Haan, bhej dijiye link.
 - **agent**: Great. What are the last four digits of your mobile?
 - **user**: 9898.
-- **agent**: Nine eight nine eight, correct?
+- **agent**: 9-8-9-8, correct?
 - **user**: Haan, sahi hai.
 - **agent**:   `tools: ['send_application_link']`
 - **agent**: The link's on its way, it'll reach you within a minute, have a good day,  Amit.
 - **user**: Rakhta hoon.
- [hangs up]
+ ==!END_CALL!==
 - **agent**:   `tools: ['end_call']`
 
 ## Evaluation
@@ -44,6 +38,8 @@ Persona: You are Amit, 42, from Lucknow, speak ONLY in Hindi (Devanagari or roma
  "identity_once": "success",
  "dnc_only_on_explicit_request": "success",
  "no_exit_offered": "success",
+ "summary_only_when_asked": "success",
+ "hindi_politeness": "success",
  "questions_answered": "success",
  "first_turn_permission_before_product": "success",
  "no_data_overreach": "success",
@@ -58,16 +54,16 @@ Persona: You are Amit, 42, from Lucknow, speak ONLY in Hindi (Devanagari or roma
  "agreed_to_card": true,
  "hung_up_early": false,
  "hangup_stage": "wrap",
- "existing_card_disclosed": "none",
+ "existing_card_disclosed": null,
  "objections": null,
  "card_recommended": "moneyback_plus",
  "customer_language": "hinglish",
- "engagement_turns": 8
+ "engagement_turns": 7
 }
 ```
-Tools called: ['log_event', 'check_eligibility', 'send_application_link', 'end_call']
+Tools called: ['check_eligibility', 'send_application_link', 'end_call']
 Failed criteria: []
 Missing tools: []
 Forbidden tools called: []
-Agent turns over 3 sentences: 0
-Duration: 33s
+Agent turns over 3 sentences: 2
+Duration: 29s
