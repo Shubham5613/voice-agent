@@ -3,8 +3,8 @@
 # restarts cloudflared, writes the new URL into .env and redeploys the agent
 # so ElevenLabs tool URLs stay correct. Run: nohup scripts/tunnel_watchdog.sh &
 cd "$(dirname "$0")/.."
-LOG=${TUNNEL_LOG:-/tmp/karta_tunnel.log}
-WLOG=${WATCHDOG_LOG:-/tmp/karta_watchdog.log}
+LOG=${TUNNEL_LOG:-/tmp/voice_agent_tunnel.log}
+WLOG=${WATCHDOG_LOG:-/tmp/voice_agent_watchdog.log}
 start_tunnel() {
   pkill -f "cloudflared tunnel --url http://localhost:8000" 2>/dev/null
   sleep 1

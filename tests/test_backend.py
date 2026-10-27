@@ -1,11 +1,11 @@
 """Backend guard tests: run with `.venv/bin/python -m pytest tests/test_backend.py -q`.
-They exercise the real FastAPI app in-process against a throwaway SQLite file (KARTA_DB_PATH), never the demo calls.db.
+They exercise the real FastAPI app in-process against a throwaway SQLite file (AGENT_DB_PATH), never the demo calls.db.
 Simulations cannot cover these: ElevenLabs simulations never execute webhook tools."""
 import os, sys, time, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 os.environ.setdefault("ELEVENLABS_API_KEY", "test")
 import tempfile
-os.environ["KARTA_DB_PATH"] = os.path.join(tempfile.mkdtemp(prefix="karta-test-"), "test.db")  # keep test events out of the demo database
+os.environ["AGENT_DB_PATH"] = os.path.join(tempfile.mkdtemp(prefix="agent-test-"), "test.db")  # keep test events out of the demo database
 from fastapi.testclient import TestClient
 from backend.main import app
 from backend.personalise import value_line, personal_context, compose_hook, rupees_in_words, fee_outlook, offer_validity

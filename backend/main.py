@@ -1,5 +1,5 @@
 import re
-"""Backend for the Karta credit-card voice agent.
+"""Backend for the Aanya credit-card voice agent.
 
 - Serves the browser dialer (web/)
 - Pre-call gate + signed session URL for ElevenLabs
@@ -27,7 +27,7 @@ CATALOG = json.loads((ROOT / "agent" / "card_catalog.json").read_text())
 CARDS = {c["id"]: c for c in CATALOG["cards"]}
 OPENERS = json.loads((ROOT / "agent" / "openers.json").read_text())
 
-app = FastAPI(title="Karta card agent backend")
+app = FastAPI(title="Aanya card agent backend")
 app.mount("/static", StaticFiles(directory=ROOT / "web"), name="static")
 
 

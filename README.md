@@ -1,6 +1,6 @@
 # Aanya · outbound credit-card voice agent (ElevenLabs + FastAPI)
 
-Take-home for the Founding Forward Deployed Engineer role at Karta AI.
+Take-home assignment for a founding forward-deployed-engineer role at a voice-AI startup (interview exercise; not affiliated with any bank or vendor).
 An outbound telesales agent that calls a bank's leads about an HDFC Bank credit card, built around the two goals
 the founder confirmed: **stop the five-second hang-up** and **get a verbal yes after the fee is stated**.
 
@@ -36,7 +36,7 @@ is enforced by the backend tools, not by the prompt.
 
 ## Run
 ```bash
-cd karta-voice-agent
+cd voice-agent
 python3.13 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env          # ELEVENLABS_API_KEY, PUBLIC_BASE_URL

@@ -1,7 +1,7 @@
 import sqlite3, json, pathlib, datetime as dt
 
 import os
-DB = pathlib.Path(os.environ.get("KARTA_DB_PATH") or pathlib.Path(__file__).resolve().parent / "calls.db")  # tests point this at a temp file
+DB = pathlib.Path(os.environ.get("AGENT_DB_PATH") or pathlib.Path(__file__).resolve().parent / "calls.db")  # tests point this at a temp file
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY, ts TEXT, lead_id TEXT, kind TEXT, payload TEXT);

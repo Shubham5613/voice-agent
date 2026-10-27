@@ -7,3 +7,4 @@ __pycache__/
 agent/.agent_state.json
 agent/.agent_state*.json
 backend/calls.db
+docs/Aanya_Voice_Agent_Design_Note.pdf

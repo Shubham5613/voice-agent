@@ -133,8 +133,8 @@ def agent_config() -> dict:
                     "opener_turn2": "Quick one: does more of your month go on food delivery, or on online shopping?",
                     "opener_benefit": "Then this fits: the Swiggy HDFC card gives ten percent back on Swiggy and five percent on other online spends."}
     return {
-        "name": "Karta Card Sales Agent",
-        "tags": ["karta", "credit-card", "outbound"],
+        "name": "Aanya Card Sales Agent",
+        "tags": ["aanya", "credit-card", "outbound"],
         "conversation_config": {
             "agent": {
                 "first_message": openers["first_message"]["en"],
