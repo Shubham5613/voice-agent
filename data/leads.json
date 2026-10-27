@@ -85,5 +85,22 @@
   "spend_label": "online shopping",
   "monthly_category_spend_inr": 15000,
   "lead_source": "you'd compared cashback cards on Paisabazaar last week"
+ },
+ {
+  "lead_id": "L007",
+  "customer_name": "Vijay",
+  "city": "Bengaluru",
+  "phone": "+919845004321",
+  "language_pref": "en",
+  "spend_hint": "flights and hotels",
+  "offer_card_id": "regalia_gold",
+  "persona_note": "Founder, flies weekly, already holds an HDFC MoneyBack Plus",
+  "relationship": "existing",
+  "spend_label": "travel",
+  "monthly_category_spend_inr": 60000,
+  "tenure_years": 4,
+  "products_held": "salary account and a MoneyBack Plus card",
+  "offer_valid_till": "the thirty-first of December",
+  "pre_approved_limit_inr": 500000
  }
 ]
