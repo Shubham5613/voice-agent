@@ -1,0 +1,150 @@
+{
+ "_note": "Public HDFC Bank card terms as commonly published. Verify current figures on hdfcbank.com before any real use. Fees exclude GST.",
+ "common": {
+  "interest_free_period_days": "up to 50",
+  "revolving_interest_monthly_pct": 3.75,
+  "revolving_interest_annual_pct": 45,
+  "late_fee_note": "Late payment charges apply if the minimum due is unpaid; none if paid in full",
+  "approval_note": "All cards are subject to eligibility and HDFC Bank credit approval"
+ },
+ "cards": [
+  {
+   "id": "swiggy_hdfc",
+   "name": "Swiggy HDFC Bank Credit Card",
+   "best_for": [
+    "food delivery",
+    "online shopping"
+   ],
+   "joining_fee_inr": 500,
+   "annual_fee_inr": 500,
+   "fee_waiver": "Annual fee waived on spending two lakh rupees in the previous year",
+   "headline_benefits": [
+    "Ten percent cashback on Swiggy: food, Instamart, Dineout and Genie",
+    "Five percent cashback on online spends across popular apps",
+    "One percent cashback on everything else"
+   ],
+   "welcome": "Three months of Swiggy One membership on activation",
+   "eligibility": {
+    "age_min": 21,
+    "age_max": 60,
+    "min_monthly_income_salaried_inr": 25000,
+    "min_annual_itr_self_employed_inr": 600000
+   },
+   "fee_waiver_spend_inr": 200000,
+   "welcome_offsets_joining_fee": false,
+   "welcome_short": "three months of Swiggy One"
+  },
+  {
+   "id": "millennia",
+   "name": "HDFC Bank Millennia Credit Card",
+   "best_for": [
+    "online shopping",
+    "food delivery",
+    "OTT",
+    "cabs"
+   ],
+   "joining_fee_inr": 1000,
+   "annual_fee_inr": 1000,
+   "fee_waiver": "Annual fee waived on spending one lakh rupees in the previous year",
+   "headline_benefits": [
+    "Five percent cashback on Amazon, Flipkart, Myntra, Swiggy, Zomato, Uber, BookMyShow and more",
+    "One percent cashback on all other spends",
+    "A one thousand rupee gift voucher every quarter you spend one lakh rupees"
+   ],
+   "welcome": "One thousand CashPoints on paying the joining fee",
+   "eligibility": {
+    "age_min": 21,
+    "age_max": 40,
+    "min_monthly_income_salaried_inr": 35000,
+    "min_annual_itr_self_employed_inr": 600000
+   },
+   "fee_waiver_spend_inr": 100000,
+   "welcome_offsets_joining_fee": true,
+   "welcome_short": "a thousand CashPoints on joining"
+  },
+  {
+   "id": "moneyback_plus",
+   "name": "HDFC Bank MoneyBack Plus Credit Card",
+   "best_for": [
+    "groceries",
+    "everyday spends",
+    "first card"
+   ],
+   "joining_fee_inr": 500,
+   "annual_fee_inr": 500,
+   "fee_waiver": "Annual fee waived on spending fifty thousand rupees in the previous year",
+   "headline_benefits": [
+    "Ten times CashPoints on Amazon, Flipkart, BigBasket, Reliance Smart and Swiggy",
+    "Two CashPoints for every one hundred fifty rupees spent elsewhere",
+    "Five hundred rupee gift voucher every quarter you spend fifty thousand rupees"
+   ],
+   "welcome": "Five hundred CashPoints on paying the joining fee",
+   "eligibility": {
+    "age_min": 21,
+    "age_max": 60,
+    "min_monthly_income_salaried_inr": 20000,
+    "min_annual_itr_self_employed_inr": 600000
+   },
+   "fee_waiver_spend_inr": 50000,
+   "welcome_offsets_joining_fee": false,
+   "welcome_short": "five hundred CashPoints on joining"
+  },
+  {
+   "id": "regalia_gold",
+   "name": "HDFC Bank Regalia Gold Credit Card",
+   "best_for": [
+    "travel",
+    "flights",
+    "hotels",
+    "lounge access"
+   ],
+   "joining_fee_inr": 2500,
+   "annual_fee_inr": 2500,
+   "fee_waiver": "Annual fee waived on spending four lakh rupees in the previous year",
+   "headline_benefits": [
+    "Complimentary airport lounge access in India and abroad",
+    "Four reward points for every one hundred fifty rupees, five times on Nykaa, Myntra, Marks and Spencer and Reliance Digital",
+    "Flight vouchers worth five thousand rupees on crossing spend milestones"
+   ],
+   "welcome": "Gift voucher worth two thousand five hundred rupees and Club Vistara Silver plus MMT Black Elite on joining",
+   "eligibility": {
+    "age_min": 21,
+    "age_max": 60,
+    "min_monthly_income_salaried_inr": 150000,
+    "min_annual_itr_self_employed_inr": 1800000
+   },
+   "fee_waiver_spend_inr": 400000,
+   "welcome_offsets_joining_fee": true,
+   "welcome_short": "a two-thousand-five-hundred-rupee voucher on joining"
+  },
+  {
+   "id": "upi_rupay",
+   "name": "HDFC Bank UPI RuPay Credit Card",
+   "best_for": [
+    "UPI payments",
+    "groceries",
+    "small daily spends",
+    "first card"
+   ],
+   "joining_fee_inr": 250,
+   "annual_fee_inr": 250,
+   "fee_waiver": "Annual fee waived on spending twenty-five thousand rupees in the previous year",
+   "headline_benefits": [
+    "Links to any UPI app, so you pay by scanning the same QR codes you already use",
+    "Three percent CashPoints on groceries, supermarkets, dining and PayZapp spends",
+    "Two percent on utility bills and one percent on other UPI spends, capped at five hundred CashPoints a month"
+   ],
+   "welcome": "No welcome gift",
+   "eligibility": {
+    "age_min": 21,
+    "age_max": 60,
+    "min_monthly_income_salaried_inr": 15000,
+    "min_annual_itr_self_employed_inr": 600000
+   },
+   "fee_waiver_spend_inr": 25000,
+   "welcome_offsets_joining_fee": false,
+   "welcome_short": "nothing, there's no welcome gift on this one",
+   "_verify": "public figures as commonly published for 2025; income floor approximate; confirm on hdfcbank.com before real use"
+  }
+ ]
+}

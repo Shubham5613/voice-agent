@@ -1,0 +1,9 @@
+__pycache__/
+.DS_Store
+.env
+.pytest_cache/
+.venv/
+*.pyc
+agent/.agent_state.json
+agent/.agent_state*.json
+backend/calls.db

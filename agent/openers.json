@@ -1,0 +1,88 @@
+{
+  "_note": "offer_hook is injected into the opener turn. Each variant is one short sentence about THEM. A/B across test calls; track hang-ups in the first 15 seconds per variant.",
+  "variants": {
+    "A_benefit": {
+      "swiggy_hdfc": "You've been shortlisted for a card that gives ten percent back on Swiggy, with the first year's fee easy to get waived.",
+      "millennia": "You've been shortlisted for a card that gives five percent back on Amazon, Flipkart, Swiggy and Zomato.",
+      "moneyback_plus": "You've been shortlisted for a low-fee card that gives ten times points on groceries and Amazon.",
+      "regalia_gold": "You've been shortlisted for a travel card with free airport lounge access in India and abroad."
+    },
+    "B_curiosity": {
+      "swiggy_hdfc": "Quick question, when you order food online, do you get anything back on it right now?",
+      "millennia": "Quick question, when you shop on Amazon or Flipkart, are you getting any cashback on it today?",
+      "moneyback_plus": "Quick question, do you get anything back on your monthly grocery or petrol spends right now?",
+      "regalia_gold": "Quick question, when you fly for work, are you paying for lounge access or skipping it?"
+    },
+    "C_permission": {
+      "swiggy_hdfc": "I know these calls are usually a waste of your time, so I'll be straight: there's a Swiggy card you qualify to apply for, and I want thirty seconds to see if it's actually useful to you.",
+      "millennia": "I know these calls are usually annoying, so I'll be straight: there's a cashback card you qualify to apply for, and I want thirty seconds to see if it's worth your time.",
+      "moneyback_plus": "I know these calls are usually annoying, so I'll be straight: there's a low-fee card you qualify to apply for, and I want thirty seconds to check if it's useful.",
+      "regalia_gold": "I know these calls are usually a waste of time, so I'll be straight: there's a travel card you qualify to apply for, and I want thirty seconds to see if it fits how you travel."
+    }
+  },
+  "first_message": {
+    "en": "Hello, Aanya here from HDFC Bank. Am I speaking with {{customer_name}}?",
+    "hi": "नमस्ते, मैं HDFC Bank से आन्या बोल रही हूँ। क्या मेरी बात {{customer_name}} जी से हो रही है?"
+  },
+  "existing_customer": {
+    "_note": "Used instead of the variant hook when the lead's relationship is 'existing' (pre-approved offer visible in the bank app). Research: sceptical Indian customers verify offers in the app.",
+    "swiggy_hdfc": "There's a pre-approved Swiggy card offer sitting on your HDFC account, you can see it in the HDFC app too, ten percent back on Swiggy.",
+    "millennia": "There's a pre-approved Millennia card offer on your HDFC account, you can see it in the HDFC app too, five percent back on Amazon, Flipkart, Swiggy and Zomato.",
+    "moneyback_plus": "There's a pre-approved MoneyBack Plus offer on your HDFC account, you can see it in the HDFC app too, a low-fee card with ten times points on groceries and Amazon.",
+    "regalia_gold": "There's a pre-approved Regalia Gold offer on your HDFC account, you can see it in the HDFC app too, with free lounge access in India and abroad."
+  },
+  "reason_first": {
+    "_note": "Variant D (default from 2026-10-26). Sequence from Callyzer + Gong + r/IndianCreditCards: identity (bank, not 'card team') -> reason specific to THEM -> thirty-second ask. No card name, no benefits, no word 'credit card' in turn 1 for existing customers. Product details only after permission; for new leads the customer's either-or answer picks the benefit. Tier 0 (new_minimal): turn 1 names no product; turn 2 is the full spend menu (UPI / groceries and fuel / online / food / travel); the answer picks the card, so 'UPI for everything' gets the RuPay-on-UPI card instead of an argument.",
+    "turn1": {
+      "existing": "Hi {customer_name}. {intro_line}There's an offer sitting on your account that was matched to how you spend with us, it's in your app as well. Got thirty seconds to check if it's actually useful?",
+      "new_with_source": "Hi {customer_name}. {intro_line}{lead_source_cap}, so I'm following up on that, nothing to sign today. Got thirty seconds to see if it's worth your time?",
+      "new_minimal": "Hi {customer_name}. Nothing to sign today, I just want to ask how you pay for things month to month, two questions and I'm done. Got thirty seconds?"
+    },
+    "either_or": {
+      "swiggy_hdfc": "Quick one: does more of your month go on food delivery, or on online shopping?",
+      "millennia": "Quick one: is more of your spend on Amazon and Flipkart, or on things like Swiggy, Zomato and Uber?",
+      "moneyback_plus": "Quick one: does more of your month go on groceries and fuel, or on online shopping?",
+      "regalia_gold": "Quick one: when you travel, is it mostly flights, or hotels and the rest?"
+    },
+    "after_yes_existing": "{value_line} That's the {offer_card_name}, pre-approved, so no documents. Want the fee and the catch before anything else?",
+    "benefit_by_answer": {
+      "swiggy_hdfc": "Then this fits: the Swiggy HDFC card gives ten percent back on Swiggy and five percent on other online spends.",
+      "millennia": "Then this fits: the Millennia gives five percent back on Amazon, Flipkart, Swiggy, Zomato and Uber.",
+      "moneyback_plus": "Then this fits: the MoneyBack Plus gives ten times points on groceries, BigBasket and Amazon, on a five hundred rupee card.",
+      "regalia_gold": "Then this fits: the Regalia Gold gives free lounge access in India and abroad plus points on every flight and hotel."
+    },
+    "menu_minimal": "Quick one: where does most of your month go? UPI for everything, groceries and fuel, online shopping, food delivery, or travel?",
+    "reveal_minimal": [
+      {
+        "answer": "UPI or cash for everything, or 'I don't use cards'",
+        "card_id": "upi_rupay",
+        "line": "Then the one thing I called about: there's a RuPay credit card that sits inside your UPI app, same QR codes you scan today, and it gives three percent back in points on groceries and dining. Worth one more minute?"
+      },
+      {
+        "answer": "groceries, fuel, supermarkets, everyday shop spends",
+        "card_id": "moneyback_plus",
+        "line": "Then the one thing I called about: on the groceries you already pay for, there's a five-hundred-rupee card that gives ten times points on groceries and Amazon. Worth one more minute?"
+      },
+      {
+        "answer": "online shopping, Amazon, Flipkart, Myntra, cabs, OTT",
+        "card_id": "millennia",
+        "line": "Then the one thing I called about: on the Amazon, Flipkart and Swiggy spends you already pay for, there's a card that gives five percent back on them. Worth one more minute?"
+      },
+      {
+        "answer": "food delivery, Swiggy, Zomato",
+        "card_id": "swiggy_hdfc",
+        "line": "Then the one thing I called about: on the food orders you already pay for, there's a five-hundred-rupee card that gives ten percent back on Swiggy. Worth one more minute?"
+      },
+      {
+        "answer": "travel, flights, hotels",
+        "card_id": "regalia_gold",
+        "line": "Then the one thing I called about: there's a travel card with free lounge access in India and abroad plus points on flights and hotels. It's the higher-fee one, so I'd check it actually fits you before saying more. Worth one more minute?"
+      },
+      {
+        "answer": "'I already use a card'",
+        "card_id": "",
+        "line": "Which one, and roughly what limit? (then the 'already have a card' route; never pitch a worse card)"
+      }
+    ]
+  }
+}
