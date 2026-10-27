@@ -88,7 +88,7 @@ def tool_defs() -> list[dict]:
     ]
     return [{
         "tool_config": {
-            "type": "webhook", "name": name, "description": desc, "response_timeout_secs": 8,
+            "type": "webhook", "name": name, "description": desc, "response_timeout_secs": 20,  # headroom for a Render cold start
             "api_schema": {"url": f"{PUBLIC}/tools/{name}", "method": "POST",
                            "request_body_schema": schema},
         }} for name, desc, schema in tools]
