@@ -30,7 +30,7 @@ is enforced by the backend tools, not by the prompt.
 - `web/index.html` – browser dialer: pick a lead and opener, call, watch transcript and backend events live
 - `data/leads.json`, `data/README.md` – six mock leads across the three data tiers and the lead schema
 - `tests/test_backend.py` – 22 backend guard tests (link two-phase, consent guards, gate, idempotency, personalisation)
-- `tests/scenarios.json`, `tests/run_simulations.py` – 34 simulated-customer scenarios judged on 19 criteria via the ElevenLabs simulation API
+- `tests/scenarios.json`, `tests/run_simulations.py` – 35 simulated-customer scenarios judged on 19 criteria via the ElevenLabs simulation API
 - `docs/` – research: Indian card telesales, lead sourcing, AI disclosure, persuasion evidence, voice of the customer (r/IndianCreditCards)
 - `scripts/tunnel_watchdog.sh` – keeps the Cloudflare quick tunnel alive and redeploys tool URLs when it changes
 
