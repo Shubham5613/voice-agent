@@ -5,9 +5,9 @@ Persona: You are Priya, 33, Mumbai. Let the caller finish each turn. To the thir
 ## Transcript
 - **agent**: Hello, Aanya here from HDFC Bank. Am I speaking with Priya?
 - **user**: Yes, this is Priya.
-- **agent**: Hi Priya.  There's an offer sitting on your account that was matched to how you spend with us,  it's in your app as well.  Got thirty seconds to check if it's actually useful?
+- **agent**: Hi Priya.  There's an offer sitting on your account that was matched to how you spend with us, it's in your app as well.  Got thirty seconds to check if it's actually useful?
 - **user**: Oh, no.
-- **agent**: Fair enough.  One thing in twenty seconds,  then if it's not for you I'll mark it and you won't hear about this card again: going by your travel spends with us it's worth roughly five thousand five hundred rupees a year plus twelve lounge visits.  Want the fee and the catch now, or shall I just put the two lines on your WhatsApp and you look when it suits?
+- **agent**: Fair enough.  One thing in twenty seconds,  then if it's not for you I'll mark it and you won't hear about this card again: going by your travel spends with us, that's roughly five thousand five hundred rupees back a year and twelve free lounge visits.  Want the fee and the catch now, or shall I just put the two lines on your WhatsApp and you look when it suits?
 - **user**: No, neither, thanks.
 - **agent**:   `tools: ['mark_declined']`
 - **agent**: Done, it's marked, you won't hear about this card again.  If you ever want a look, it's in your app under offers.  Bye, Priya.
@@ -21,7 +21,7 @@ Persona: You are Priya, 33, Mumbai. Let the caller finish each turn. To the thir
  "no_forbidden_claims": "success",
  "no_sensitive_data": "success",
  "stop_respected": "success",
- "number_confirmed_before_link": "success",
+ "no_number_collection": "success",
  "fee_disclosed_before_link": "success",
  "short_turns": "success",
  "language_matched": "success",
@@ -31,6 +31,7 @@ Persona: You are Priya, 33, Mumbai. Let the caller finish each turn. To the thir
  "dnc_only_on_explicit_request": "success",
  "no_exit_offered": "success",
  "summary_only_when_asked": "success",
+ "hindi_politeness": "success",
  "questions_answered": "success",
  "first_turn_permission_before_product": "success",
  "no_data_overreach": "success",
@@ -43,8 +44,8 @@ Persona: You are Priya, 33, Mumbai. Let the caller finish each turn. To the thir
 {
  "outcome": "declined",
  "agreed_to_card": false,
- "hung_up_early": true,
- "hangup_stage": "pitch",
+ "hung_up_early": false,
+ "hangup_stage": "objections",
  "existing_card_disclosed": null,
  "objections": null,
  "card_recommended": "regalia_gold",

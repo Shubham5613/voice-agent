@@ -52,31 +52,10 @@ def leads():
                  "value_line": value_line(l["offer_card_id"], l), "personal_context": personal_context(l)} for l in LEADS.values()]
 
 
-@app.get("/api/session")
-async def session(lead_id: str, variant: str = "D_reason_first", force: int = 0, intro: int = 0):
-    """Pre-call gate, then a signed URL + the dynamic variables the dialer must pass to startSession."""
-    lead = LEADS.get(lead_id)
-    if not lead:
-        raise HTTPException(404, "unknown lead")
-    if db.is_dnc(lead_id) and not force:
-        raise HTTPException(409, "Lead is on the do-not-call list")
-    card_for_gate = CARDS.get(lead.get("offer_card_id"), CARDS["moneyback_plus"])
-    dec = db.declined(lead_id, card_for_gate["id"])
-    if dec and not force:
-        # The agent promised "you won't hear about this card again". The system keeps that promise.
-        raise HTTPException(409, f"Customer declined {card_for_gate['name']} on {dec['ts'][:10]} and was promised no further calls about it. Pass force=1 for a demo.")
-    hour = dt.datetime.now(IST).hour
-    if not (10 <= hour < 19) and not force:
-        # RBI Credit Card and Debit Card Directions 2025, para 11(9): representatives may contact customers only 10:00-19:00.
-        raise HTTPException(409, f"Outside RBI calling window 10:00-19:00 IST (now {hour}:00 IST). Pass force=1 for a demo.")
-    aid = agent_id()
-    if not aid:
-        raise HTTPException(500, "Agent not deployed: run python agent/deploy_agent.py")
-    async with httpx.AsyncClient(timeout=20) as cx:
-        r = await cx.get("https://api.elevenlabs.io/v1/convai/conversation/get-signed-url",
-                         params={"agent_id": aid}, headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"]})
-    if r.status_code >= 400:
-        raise HTTPException(502, f"ElevenLabs: {r.text}")
+def compose_dynamic_variables(lead: dict, variant: str = "D_reason_first", intro: int = 0) -> dict:
+    """Everything the agent knows about this call. Pure: no DB, no network. Used by /api/session (dialer), the deploy script
+    (defaults for the public talk-to link) and tests."""
+    lead_id = lead["lead_id"]
     # Minimal-data principle: only lead_id, customer_name and phone are required; everything else has a default.
     card = CARDS.get(lead.get("offer_card_id"), CARDS["moneyback_plus"])
     existing = lead.get("relationship", "new") == "existing"
@@ -113,6 +92,38 @@ async def session(lead_id: str, variant: str = "D_reason_first", force: int = 0,
            "opener_turn1": opener_turn1 if reason_first else "", "opener_turn2": opener_turn2 if reason_first else "",
            "opener_benefit": opener_benefit if reason_first else "",
            "call_ref": f"{lead_id}-{int(dt.datetime.now().timestamp())}"}
+    return dyn
+
+
+@app.get("/api/session")
+async def session(lead_id: str, variant: str = "D_reason_first", force: int = 0, intro: int = 0):
+    """Pre-call gate, then a signed URL + the dynamic variables the dialer must pass to startSession."""
+    lead = LEADS.get(lead_id)
+    if not lead:
+        raise HTTPException(404, "unknown lead")
+    if db.is_dnc(lead_id) and not force:
+        raise HTTPException(409, "Lead is on the do-not-call list")
+    card_for_gate = CARDS.get(lead.get("offer_card_id"), CARDS["moneyback_plus"])
+    dec = db.declined(lead_id, card_for_gate["id"])
+    if dec and not force:
+        # The agent promised "you won't hear about this card again". The system keeps that promise.
+        raise HTTPException(409, f"Customer declined {card_for_gate['name']} on {dec['ts'][:10]} and was promised no further calls about it. Pass force=1 for a demo.")
+    hour = dt.datetime.now(IST).hour
+    if not (10 <= hour < 19) and not force:
+        # RBI Credit Card and Debit Card Directions 2025, para 11(9): representatives may contact customers only 10:00-19:00.
+        raise HTTPException(409, f"Outside RBI calling window 10:00-19:00 IST (now {hour}:00 IST). Pass force=1 for a demo.")
+    aid = agent_id()
+    if not aid:
+        raise HTTPException(500, "Agent not deployed: run python agent/deploy_agent.py")
+    async with httpx.AsyncClient(timeout=20) as cx:
+        r = await cx.get("https://api.elevenlabs.io/v1/convai/conversation/get-signed-url",
+                         params={"agent_id": aid}, headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"]})
+    if r.status_code >= 400:
+        raise HTTPException(502, f"ElevenLabs: {r.text}")
+    dyn = compose_dynamic_variables(lead, variant, intro)
+    card = CARDS.get(lead.get("offer_card_id"), CARDS["moneyback_plus"])
+    existing = lead.get("relationship", "new") == "existing"
+    reason_first = variant == "D_reason_first"
     if intro:
         # Real integration point: WhatsApp Business template from the bank's verified account, e.g.
         # "Hi {name}, Aanya from HDFC Bank's card team. You have a {card} offer on your account (see the HDFC app). May I call you for two minutes?"
@@ -212,7 +223,6 @@ def tool_check_eligibility(b: Eligibility):
 class SendLink(BaseModel):
     lead_id: str
     card_id: str
-    phone_last4: str = Field(min_length=4, max_length=4, pattern=r"^\d{4}$")
     channel: Literal["whatsapp", "sms"] = "whatsapp"
     customer_said_yes_after_disclosure: bool = False
     call_ref: str = ""
@@ -256,9 +266,7 @@ def tool_send_link(b: SendLink):
         return {"status": "disclosure_required",
                 "say_exactly": disclosure_sentence(card),
                 "message_for_agent": "Not sent. Say the sentence in say_exactly word for word, wait for a clear yes, then call send_application_link again with customer_said_yes_after_disclosure=true. If they say no, do not send."}
-    if lead["phone"][-4:] != b.phone_last4:
-        db.log(b.lead_id, "link_rejected", {"reason": "last4 mismatch", "given": b.phone_last4})
-        return {"status": "mismatch", "message_for_agent": "The last four digits don't match our record. Ask the customer to repeat their number slowly; do not say the link was sent."}
+    # The link goes only to the mobile number the bank has on record; the agent never collects or confirms a number on the call.
     scope = b.call_ref or str(dt.date.today())  # one link per card per call; falls back to per day if no call_ref
     idem = hashlib.sha1(f"{b.lead_id}:{b.card_id}:{scope}".encode()).hexdigest()[:12]
     prior = db.get_link(idem)
@@ -269,7 +277,7 @@ def tool_send_link(b: SendLink):
     db.put_link(idem, b.lead_id, b.card_id, b.channel, ref)
     db.log(b.lead_id, "link_sent", b.model_dump() | {"reference": ref})
     return {"status": "sent", "reference": ref, "channel": b.channel,
-            "message_for_agent": f"Link sent on {b.channel} to the number ending {b.phone_last4}. Tell the customer it will arrive within a minute, valid for seven days."}
+            "message_for_agent": f"Link sent on {b.channel} to the mobile number registered with the bank. Tell the customer it goes to their registered mobile and arrives within a minute, valid for seven days."}
 
 
 class Summary(BaseModel):

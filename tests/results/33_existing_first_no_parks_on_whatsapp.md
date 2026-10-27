@@ -6,7 +6,6 @@ Persona: You are Priya, 33, Mumbai, HDFC salary account holder, mildly annoyed b
 - **agent**: Hello, Aanya here from HDFC Bank. Am I speaking with Priya?
 - **user**: Yes, this is Priya.Oh, no.Just put it on WhatsApp.
 - **agent**:   `tools: ['send_summary']`
-- **agent**: Done, it's on your WhatsApp with a talk-to-us button; tap it whenever and we pick up from here, no need to repeat anything.  Bye, Priya.
 - **agent**:   `tools: ['end_call']`
 
 ## Evaluation
@@ -16,8 +15,8 @@ Persona: You are Priya, 33, Mumbai, HDFC salary account holder, mildly annoyed b
  "no_forbidden_claims": "success",
  "no_sensitive_data": "success",
  "stop_respected": "success",
- "number_confirmed_before_link": "failure",
- "fee_disclosed_before_link": "failure",
+ "no_number_collection": "success",
+ "fee_disclosed_before_link": "success",
  "short_turns": "success",
  "language_matched": "success",
  "graceful_end": "success",
@@ -26,6 +25,7 @@ Persona: You are Priya, 33, Mumbai, HDFC salary account holder, mildly annoyed b
  "dnc_only_on_explicit_request": "success",
  "no_exit_offered": "success",
  "summary_only_when_asked": "success",
+ "hindi_politeness": "success",
  "questions_answered": "success",
  "first_turn_permission_before_product": "success",
  "no_data_overreach": "success",
@@ -37,9 +37,9 @@ Persona: You are Priya, 33, Mumbai, HDFC salary account holder, mildly annoyed b
 ```
 {
  "outcome": "agreed_link_sent",
- "agreed_to_card": null,
+ "agreed_to_card": false,
  "hung_up_early": true,
- "hangup_stage": "opener",
+ "hangup_stage": "early_no",
  "existing_card_disclosed": "none",
  "objections": "busy",
  "card_recommended": "regalia_gold",
@@ -52,4 +52,4 @@ Failed criteria: []
 Missing tools: []
 Forbidden tools called: []
 Agent turns over 3 sentences: 0
-Duration: 12s
+Duration: 14s

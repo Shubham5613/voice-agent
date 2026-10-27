@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 load_dotenv(ROOT / ".env")
 H = {"xi-api-key": os.environ["ELEVENLABS_API_KEY"]}
-AID = json.loads((ROOT / "agent" / ".agent_state.json").read_text())["agent_id"]
+AID = os.environ.get("ELEVEN_AGENT_ID") or json.loads((ROOT / "agent" / ".agent_state.json").read_text())["agent_id"]  # ELEVEN_AGENT_ID=... to test the public demo agent
 SPEC = json.loads((ROOT / "tests" / "scenarios.json").read_text())
 OUT = ROOT / "tests" / "results"; OUT.mkdir(exist_ok=True)
 
@@ -18,7 +18,7 @@ OUT = ROOT / "tests" / "results"; OUT.mkdir(exist_ok=True)
 def run(sc: dict) -> dict:
     body = {"simulation_specification": {
                 "simulated_user_config": {"prompt": {"prompt": sc["persona"] + "\n\n" + SPEC["_common_user_rules"]}},
-                "dynamic_variables": SPEC["_leads"][sc["lead"]] | {"call_ref": f"sim-{sc['id']}-{int(time.time()*1000)}"},
+                "dynamic_variables": SPEC["_leads"][sc["lead"]] | {"call_ref": f"sim-{sc['id']}-{int(time.time()*1000)}", "system__conversation_id": f"sim-{sc['id']}-{int(time.time()*1000)}"},  # tools scope idempotency by conversation id; sims must supply one
                 "tool_mock_config": SPEC.get("_tool_mocks", {})},
             "new_turns_limit": 40}
     t0 = time.time()

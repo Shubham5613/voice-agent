@@ -1,0 +1,19 @@
+# Render blueprint: one free web service running the FastAPI backend
+# (dialer page, session endpoint, agent tool webhooks, SQLite call log).
+services:
+  - type: web
+    name: aanya-voice-agent
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.4
+      - key: ELEVENLABS_API_KEY
+        sync: false          # paste in the dashboard, never committed
+      - key: ELEVEN_AGENT_ID
+        sync: false          # the dialer agent id
+      - key: PUBLIC_BASE_URL
+        sync: false          # https://<service>.onrender.com, used for resume links

@@ -66,3 +66,13 @@ interruption flags and tool calls; it is the right place to diagnose any odd rea
 - Backend routes are unauthenticated and the post-call webhook signature is not verified.
 - Hindi preset exists and passes simulations; not yet exercised on a real call.
 - Conversion is unmeasured. The next step is an adversarial arena: rude customer personas with a patience budget, same persona bank across all three tiers, hang-up stage and verbal-yes rate per tier.
+
+## Deploying (Render free tier)
+
+The repo ships a `render.yaml` blueprint. On render.com choose **New → Blueprint**,
+pick this repo, and set three environment variables when prompted:
+`ELEVENLABS_API_KEY`, `ELEVEN_AGENT_ID` (the dialer agent) and `PUBLIC_BASE_URL`
+(`https://<service-name>.onrender.com`). Then point the agent tools at the new
+host by re-running `python agent/deploy_agent.py` with the same `PUBLIC_BASE_URL`.
+Free instances sleep after 15 idle minutes; a 5-minute pinger (e.g. cron-job.org)
+keeps the first visitor from waiting ~40 s.

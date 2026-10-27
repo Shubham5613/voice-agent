@@ -67,37 +67,52 @@ def test_new_lead_with_details_is_scored():
 
 # ---------- link: the four guards ----------
 def test_link_requires_eligibility_for_new_lead():
-    # L005 (Vikram) has had no eligibility check in this process unless another test ran one; use a card nobody checks.
-    r = post("/tools/send_application_link", lead_id="L005", card_id="swiggy_hdfc", phone_last4="1098", channel="whatsapp",
+    # L005 (Vijay) has had no eligibility check in this process unless another test ran one; use a card nobody checks.
+    r = post("/tools/send_application_link", lead_id="L005", card_id="swiggy_hdfc", channel="whatsapp",
              customer_said_yes_after_disclosure=True, call_ref=ref("elig"))
     assert r["status"] == "eligibility_required"
 
 
 def test_link_is_two_phase_disclosure_then_send():
     cr = ref("twophase")
-    first = post("/tools/send_application_link", lead_id="L004", card_id="millennia", phone_last4="2109", channel="whatsapp", call_ref=cr)
+    first = post("/tools/send_application_link", lead_id="L004", card_id="millennia", channel="whatsapp", call_ref=cr)
     assert first["status"] == "disclosure_required"
     assert first["say_exactly"].startswith("Quick formality before I send it: the annual fee is one thousand rupees")
     assert "subject to the bank's eligibility check. Shall I go ahead?" in first["say_exactly"]
-    second = post("/tools/send_application_link", lead_id="L004", card_id="millennia", phone_last4="2109", channel="whatsapp",
+    second = post("/tools/send_application_link", lead_id="L004", card_id="millennia", channel="whatsapp",
                   call_ref=cr, customer_said_yes_after_disclosure=True)
     assert second["status"] == "sent" and second["reference"].startswith("APP-")
 
 
-def test_link_only_to_registered_number():
-    r = post("/tools/send_application_link", lead_id="L004", card_id="millennia", phone_last4="9999", channel="whatsapp",
-             call_ref=ref("mismatch"), customer_said_yes_after_disclosure=True)
-    assert r["status"] == "mismatch"
+def test_link_goes_to_registered_number_without_collecting_one():
+    # No phone field exists any more: the agent never asks for digits; the backend sends to the number on record.
+    r = post("/tools/send_application_link", lead_id="L004", card_id="millennia", channel="whatsapp",
+             call_ref=ref("registered"), customer_said_yes_after_disclosure=True)
+    assert r["status"] == "sent" and "registered" in r["message_for_agent"]
+    assert "phone_last4" not in r
+
+
+def test_default_variables_are_the_minimal_data_lead():
+    # The public talk-to link has no dialer session, so the agent falls back to these: tier 0, no product in turn 1.
+    from backend.main import LEADS, compose_dynamic_variables
+    dyn = compose_dynamic_variables(LEADS["L005"])
+    assert dyn["customer_name"] == "Vijay"
+    assert dyn["opener_turn1"].startswith("Hi Vijay. Nothing to sign today")
+    assert "card" not in dyn["opener_turn1"].lower()
+    assert "UPI for everything" in dyn["opener_turn2"]
+    from agent.deploy_agent import agent_config
+    ph = agent_config()["conversation_config"]["agent"]["dynamic_variables"]["dynamic_variable_placeholders"]
+    assert ph["customer_name"] == "Vijay" and ph["opener_turn1"] == dyn["opener_turn1"]
 
 
 def test_link_idempotent_within_one_call_but_not_across_calls():
     cr = ref("idem")
-    a = post("/tools/send_application_link", lead_id="L002", card_id="regalia_gold", phone_last4="5678", channel="whatsapp",
+    a = post("/tools/send_application_link", lead_id="L002", card_id="regalia_gold", channel="whatsapp",
              call_ref=cr, customer_said_yes_after_disclosure=True)
-    b = post("/tools/send_application_link", lead_id="L002", card_id="regalia_gold", phone_last4="5678", channel="whatsapp",
+    b = post("/tools/send_application_link", lead_id="L002", card_id="regalia_gold", channel="whatsapp",
              call_ref=cr, customer_said_yes_after_disclosure=True)
     assert a["status"] == "sent" and b["status"] == "already_sent" and b["reference"] == a["reference"]
-    other = post("/tools/send_application_link", lead_id="L002", card_id="regalia_gold", phone_last4="5678", channel="whatsapp",
+    other = post("/tools/send_application_link", lead_id="L002", card_id="regalia_gold", channel="whatsapp",
                  call_ref=ref("idem2"), customer_said_yes_after_disclosure=True)
     assert other["status"] == "sent" and other["reference"] != a["reference"]
 
